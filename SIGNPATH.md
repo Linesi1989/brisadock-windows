@@ -1,0 +1,8 @@
+# Preparación para SignPath Foundation
+
+1. Publicar este código de Windows con su licencia, avisos y script de compilación. Subir una primera release de Windows con instrucciones y vincularla al código de esa misma versión.
+2. Ejecutar la compilación en GitHub Actions con un ejecutor de GitHub y comprobar arranque, apertura de archivos y funcionamiento del instalador. Para la solicitud, conservar el enlace a la release y a la compilación. [Integración de GitHub con SignPath](https://docs.signpath.io/trusted-build-systems/github).
+3. Activar la autenticación de dos factores, documentar responsables de cambios y de aprobación, y enviar la [solicitud de SignPath Foundation](https://signpath.org/apply.html). La fundación evalúa la trayectoria verificable del proyecto y la procedencia de los ejecutables. [Condiciones](https://signpath.org/terms).
+4. Si se aprueba la solicitud, configurar la verificación del origen de GitHub y las restricciones de metadatos para firmar los binarios propios. Conservar las firmas de Python, Qt y las otras dependencias. Planificar la firma de BrisaDock.exe antes de crear el instalador y la del instalador después de empaquetarlo. Completar la política pública de firma con los responsables reales y el estado del servicio.
+5. Extraer el contenido del instalador definitivo y verificar la firma Authenticode de cada PE, además de la del instalador. Verificar con SignPath y Microsoft cualquier binario de terceros que quede sin una firma aceptada. [Requisitos de Microsoft Store para EXE](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msi/app-package-requirements).
+
