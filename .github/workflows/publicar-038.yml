@@ -1,0 +1,37 @@
+name: Publicar BrisaDock 0.38
+on:
+  push:
+    branches: [release/windows-0.38.0]
+    paths: [.github/workflows/publicar-038.yml]
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Verificar y publicar el portable
+        shell: bash
+        run: |
+          set -euo pipefail
+          asset=BrisaDock-Windows-0.38-x64.zip
+          gh api "repos/$GH_REPO/actions/artifacts/13474871762/zip" > "$asset"
+          printf '%s  %s\n' 5472a8cc3fd23041b6e911e36fc64abf6bfe4be5161321891247e324392da520 "$asset" > SHA256SUMS.txt
+          sha256sum --check SHA256SUMS.txt
+          cat > release-notes.md <<'EOF'
+          Primera versión pública de BrisaDock para Windows 11 x64. Incluye un dock configurable con aplicaciones fijadas, ventanas abiertas y pilas de carpetas.
+
+          Descarga y extrae el ZIP completo. Abre `BrisaDock.exe` desde la carpeta extraída. El portable se distribuye sin firma Authenticode.
+
+          Se verificó el hash del ZIP y el arranque del ejecutable en Windows 11 con un perfil temporal. El uso interactivo sigue en revisión, por lo que esta entrega se publica como versión preliminar.
+
+          [Compilación de origen](https://github.com/Linesi1989/brisadock-windows/actions/runs/42156215467)
+          EOF
+          gh release create v0.38.0 "$asset" SHA256SUMS.txt \
+            --target b5526ab9953aa70432796a118b3c1d0f86cb2897 \
+            --title 'BrisaDock 0.38 para Windows' --notes-file release-notes.md --prerelease
